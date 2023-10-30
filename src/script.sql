@@ -37,7 +37,8 @@ CREATE TABLE VIVERO (
   nombre_vivero VARCHAR(50) NOT NULL,
   latitud_vivero DECIMAL(10, 8) NOT NULL,
   longitud_vivero DECIMAL(11, 8) NOT NULL
-  CONSTRAINT CHK_VIVERO_COORDENADAS CHECK (latitud_vivero BETWEEN -90 AND 90 AND longitud_vivero BETWEEN -180 AND 180)
+  CONSTRAINT CHK_VIVERO_COORDENADAS
+    CHECK (latitud_vivero BETWEEN -90 AND 90 AND longitud_vivero BETWEEN -180 AND 180)
 );
 
 CREATE TABLE ZONA (
@@ -46,15 +47,20 @@ CREATE TABLE ZONA (
   latitud_zona DECIMAL(10, 8) NOT NULL,
   longitud_zona DECIMAL(11, 8) NOT NULL,
   tipo_zona VARCHAR(50) NOT NULL
-  CONSTRAINT CHK_ZONA_TIPO CHECK (tipo_zona IN ('Almacen', 'Zona_exterior'))
+  CONSTRAINT CHK_ZONA_TIPO 
+    CHECK (tipo_zona IN ('Almacen', 'Zona_exterior'))
 );
 
 CREATE TABLE ASIGNA (
   id_vivero INT NOT NULL,
   id_zona INT NOT NULL,
   PRIMARY KEY (id_vivero, id_zona),
-  FOREIGN KEY (id_vivero) REFERENCES VIVERO(id_vivero) ON DELETE CASCADE,
-  FOREIGN KEY (id_zona) REFERENCES ZONA(id_zona) ON DELETE CASCADE
+  FOREIGN KEY (id_vivero) 
+    REFERENCES VIVERO(id_vivero) 
+      ON DELETE CASCADE,
+  FOREIGN KEY (id_zona) 
+    REFERENCES ZONA(id_zona) 
+      ON DELETE CASCADE
 );
 
 CREATE TABLE ALMACEN (
@@ -73,7 +79,9 @@ CREATE TABLE EMPLEADO (
   nombre_empleado VARCHAR(50) NOT NULL,
   tareas VARCHAR(50) NOT NULL,
   productividad INT NOT NULL,
-  FOREIGN KEY (id_zona) REFERENCES ZONA(id_zona) ON DELETE CASCADE
+  FOREIGN KEY (id_zona) 
+    REFERENCES ZONA(id_zona) 
+      ON DELETE CASCADE
 );
 
 CREATE TABLE CLIENTE_PLUS (
@@ -83,7 +91,9 @@ CREATE TABLE CLIENTE_PLUS (
   pedidos_realizados INT NOT NULL,
   volumen_compra DECIMAL(10, 2) NOT NULL,
   dni_empleado VARCHAR(50) NOT NULL,
-  FOREIGN KEY (dni_empleado) REFERENCES EMPLEADO(dni_empleado) ON DELETE CASCADE
+  FOREIGN KEY (dni_empleado) 
+    REFERENCES EMPLEADO(dni_empleado) 
+      ON DELETE CASCADE
 );
 
 CREATE TABLE CLIENTE (
@@ -100,28 +110,42 @@ CREATE TABLE PRODUCTO (
   dni_empleado VARCHAR(50) NOT NULL,
   dni_plus VARCHAR(50) NOT NULL, 
   dni_cliente VARCHAR(50) NOT NULL,
-  FOREIGN KEY (id_zona) REFERENCES ZONA(id_zona) ON DELETE CASCADE,
-  FOREIGN KEY (dni_empleado) REFERENCES EMPLEADO(dni_empleado) ON DELETE CASCADE,
-  FOREIGN KEY (dni_plus) REFERENCES CLIENTE_PLUS(dni_plus) ON DELETE CASCADE,
-  FOREIGN KEY (dni_cliente) REFERENCES CLIENTE(dni_cliente) ON DELETE CASCADE
+  FOREIGN KEY (id_zona) 
+    REFERENCES ZONA(id_zona) 
+      ON DELETE CASCADE,
+  FOREIGN KEY (dni_empleado) 
+    REFERENCES EMPLEADO(dni_empleado) 
+      ON DELETE CASCADE,
+  FOREIGN KEY (dni_plus) 
+    REFERENCES CLIENTE_PLUS(dni_plus) 
+      ON DELETE CASCADE,
+  FOREIGN KEY (dni_cliente) 
+    REFERENCES CLIENTE(dni_cliente) 
+      ON DELETE CASCADE
 );
 
 CREATE TABLE PLANTAS (
   nombre_producto VARCHAR(50) PRIMARY KEY,
   numero_plantas INT NOT NULL,
-  FOREIGN KEY (nombre_producto) REFERENCES PRODUCTO(nombre_producto) ON DELETE CASCADE
+  FOREIGN KEY (nombre_producto) 
+    REFERENCES PRODUCTO(nombre_producto) 
+      ON DELETE CASCADE
 );
 
 CREATE TABLE JARDINERIA (
   nombre_producto VARCHAR(50) PRIMARY KEY,
   numero_macetas INT NOT NULL,
-  FOREIGN KEY (nombre_producto) REFERENCES PRODUCTO(nombre_producto) ON DELETE CASCADE
+  FOREIGN KEY (nombre_producto) 
+    REFERENCES PRODUCTO(nombre_producto) 
+      ON DELETE CASCADE
 );
 
 CREATE TABLE DECORACION (
   nombre_producto VARCHAR(50) PRIMARY KEY,
   numero_decoracion INT NOT NULL,
-  FOREIGN KEY (nombre_producto) REFERENCES PRODUCTO(nombre_producto) ON DELETE CASCADE
+  FOREIGN KEY (nombre_producto) 
+    REFERENCES PRODUCTO(nombre_producto) 
+      ON DELETE CASCADE
 );
 
 -- Insertar datos
